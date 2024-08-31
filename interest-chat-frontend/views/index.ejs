@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web App</title>
+</head>
+<body>
+    <h1>Welcome to My Web App</h1>
+    
+    <!-- Registration Form -->
+    <h2>Register</h2>
+    <form action="/register" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Register</button>
+    </form>
+    
+    <!-- Login Form -->
+    <h2>Login</h2>
+    <form action="/login" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <!-- Interest Form -->
+    <h2>Submit Interest</h2>
+    <form action="/interest" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="interest">Interest:</label>
+        <input type="text" id="interest" name="interest" required>
+        <button type="submit">Submit Interest</button>
+    </form>
+
+    <!-- Message Form -->
+    <h2>Send Message</h2>
+    <form action="/message" method="POST">
+        <label for="from">From:</label>
+        <input type="text" id="from" name="from" required>
+        <label for="to">To:</label>
+        <input type="text" id="to" name="to" required>
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</body>
+</html>
