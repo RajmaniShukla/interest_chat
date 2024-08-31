@@ -17,9 +17,9 @@ app.get('/', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-    const { username, password } = req.body;
+    const { username, email,password } = req.body;
     try {
-        const response = await axios.post('http://127.0.0.1:8000/api/register/', { username, password });
+        const response = await axios.post('http://127.0.0.1:8000/api/register/', { username, email, password });
         res.send(response.data);
     } catch (error) {
         res.status(500).send('Error registering user');
