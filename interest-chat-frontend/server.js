@@ -30,8 +30,11 @@ app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     try {
         const response = await axios.post('http://127.0.0.1:8000/api/login/', { username, password });
-        res.send(response.data);
+        //res.send(response.data);
+        const data = response.data;
+        res.render('dashboard',{ data });
     } catch (error) {
+        console.error(error);
         res.status(500).send('Error logging in');
     }
 });
