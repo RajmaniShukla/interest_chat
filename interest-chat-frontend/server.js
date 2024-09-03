@@ -97,7 +97,7 @@ app.post('/message', async (req, res) => {
         "receiver": 3, // for testing
     };
     try {
-        const response = await axios.post('http://127.0.0.1:8000/api/message/', 
+        const response = await axios.post('http://127.0.0.1:8000/api/messages/', 
             payload ,{
                 headers: {
                     'Authorization': `Bearer ${token}`,
