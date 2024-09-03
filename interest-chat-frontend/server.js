@@ -63,6 +63,31 @@ app.post('/interests', async (req, res) => {
     }
 });
 
+app.post('/interests/received', async (req, res) => {
+    const { username, interest, } = req.body;
+    const {token} = req.query;
+    let payload = {
+        "sender":1,
+        "receiver":2
+    };
+    try {
+        const response = await axios.post('http://127.0.0.1:8000/api/interests/received/', 
+            payload ,{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type' : 'application/json'
+            }
+        });
+        res.send(response.data);
+        //const data = response.data;
+        //res.render('dashboard',{ data, username});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error saving interest'+error);
+    }
+});
+
+
 app.post('/message', async (req, res) => {
     const { from, to, message } = req.body;
     const {token} = req.query;
