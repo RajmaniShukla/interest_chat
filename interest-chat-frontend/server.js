@@ -89,12 +89,12 @@ app.post('/interests/received', async (req, res) => {
 
 
 app.post('/message', async (req, res) => {
-    const { from, to, message } = req.body;
+    const { message } = req.body;
     const {token} = req.query;
     payload ={
         "content": {message},
-        "sender": {from},
-        "receiver": {to},
+        "sender": 2, // For testing 
+        "receiver": 3, // for testing
     };
     try {
         const response = await axios.post('http://127.0.0.1:8000/api/message/', 
