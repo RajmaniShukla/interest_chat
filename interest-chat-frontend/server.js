@@ -32,30 +32,56 @@ app.post('/login', async (req, res) => {
         const response = await axios.post('http://127.0.0.1:8000/api/login/', { username, password });
         //res.send(response.data);
         const data = response.data;
-        res.render('dashboard',{ data });
+        res.render('dashboard',{ data, username});
     } catch (error) {
         console.error(error);
         res.status(500).send('Error logging in');
     }
 });
 
-app.post('/interest', async (req, res) => {
-    const { username, interest } = req.body;
+app.post('/interests', async (req, res) => {
+    const { username, interest, } = req.body;
+    const {token} = req.query;
+    let payload = {
+        "sender":1,
+        "receiver":2
+    };
     try {
-        const response = await axios.post('http://127.0.0.1:8000/api/interest/', { username, interest });
+        const response = await axios.post('http://127.0.0.1:8000/api/interests/', 
+            payload ,{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type' : 'application/json'
+            }
+        });
         res.send(response.data);
+        //const data = response.data;
+        //res.render('dashboard',{ data, username});
     } catch (error) {
-        res.status(500).send('Error saving interest');
+        console.log(error);
+        res.status(500).send('Error saving interest'+error);
     }
 });
 
 app.post('/message', async (req, res) => {
     const { from, to, message } = req.body;
+    const {token} = req.query;
+    payload ={
+        "content": {message},
+        "sender": {from},
+        "receiver": {to},
+    };
     try {
-        const response = await axios.post('http://127.0.0.1:8000/api/message/', { from, to, message });
+        const response = await axios.post('http://127.0.0.1:8000/api/message/', 
+            payload ,{
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type' : 'application/json'
+                }
+            });
         res.send(response.data);
     } catch (error) {
-        res.status(500).send('Error sending message');
+        res.status(500).send('Error sending message'+error);
     }
 });
 

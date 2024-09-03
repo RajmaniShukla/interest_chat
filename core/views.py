@@ -1,3 +1,4 @@
+from django.dispatch import receiver
 from rest_framework import generics
 from django.contrib.auth.models import User
 from rest_framework.response import Response
@@ -34,6 +35,22 @@ class InterestView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(sender=self.request.user)
 
+class InterestReceived(generics.GenericAPIView):
+    queryset = Interest.objects.all()
+    serializer_class = InterestSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        interests = Interest.objects.filter(receiver=self.request.user)
+        serializer = InterestSerializer(interests, many=True)
+        return Response(serializer.data)
+    
+class InterestUpdate(generics.UpdateAPIView):
+    queryset = Interest.objects.all()
+    serializer_class = InterestSerializer
+    permission_classes = [IsAuthenticated]
+    
+
 class MessageView(generics.ListCreateAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
@@ -41,3 +58,13 @@ class MessageView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(sender=self.request.user)
+
+class MessageReceived(generics.GenericAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        messages = Message.objects.filter(receiver=self.request.user)
+        serializer = MessageSerializer(messages, many=True)
+        return Response(serializer.data)
