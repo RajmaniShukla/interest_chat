@@ -3,412 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web App</title>
-    <style>
-        body{
-            background-color: #f4f7f6;
-            margin-top:20px;
-        }
-        .card {
-            background: #fff;
-            transition: .5s;
-            border: 0;
-            margin-bottom: 30px;
-            border-radius: .55rem;
-            position: relative;
-            width: 100%;
-            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
-        }
-        .chat-app .people-list {
-            width: 280px;
-            position: absolute;
-            left: 0;
-            top: 0;
-            padding: 20px;
-            z-index: 7
-        }
-
-        .chat-app .chat {
-            margin-left: 280px;
-            border-left: 1px solid #eaeaea
-        }
-
-        .people-list {
-            -moz-transition: .5s;
-            -o-transition: .5s;
-            -webkit-transition: .5s;
-            transition: .5s
-        }
-
-        .people-list .chat-list li {
-            padding: 10px 15px;
-            list-style: none;
-            border-radius: 3px
-        }
-
-        .people-list .chat-list li:hover {
-            background: #efefef;
-            cursor: pointer
-        }
-
-        .people-list .chat-list li.active {
-            background: #efefef
-        }
-
-        .people-list .chat-list li .name {
-            font-size: 15px
-        }
-
-        .people-list .chat-list img {
-            width: 45px;
-            border-radius: 50%
-        }
-
-        .people-list img {
-            float: left;
-            border-radius: 50%
-        }
-
-        .people-list .about {
-            float: left;
-            padding-left: 8px
-        }
-
-        .people-list .status {
-            color: #999;
-            font-size: 13px
-        }
-
-        .chat .chat-header {
-            padding: 15px 20px;
-            border-bottom: 2px solid #f4f7f6
-        }
-
-        .chat .chat-header img {
-            float: left;
-            border-radius: 40px;
-            width: 40px
-        }
-
-        .chat .chat-header .chat-about {
-            float: left;
-            padding-left: 10px
-        }
-
-        .chat .chat-history {
-            padding: 20px;
-            border-bottom: 2px solid #fff
-        }
-
-        .chat .chat-history ul {
-            padding: 0
-        }
-
-        .chat .chat-history ul li {
-            list-style: none;
-            margin-bottom: 30px
-        }
-
-        .chat .chat-history ul li:last-child {
-            margin-bottom: 0px
-        }
-
-        .chat .chat-history .message-data {
-            margin-bottom: 15px
-        }
-
-        .chat .chat-history .message-data img {
-            border-radius: 40px;
-            width: 40px
-        }
-
-        .chat .chat-history .message-data-time {
-            color: #434651;
-            padding-left: 6px
-        }
-
-        .chat .chat-history .message {
-            color: #444;
-            padding: 18px 20px;
-            line-height: 26px;
-            font-size: 16px;
-            border-radius: 7px;
-            display: inline-block;
-            position: relative
-        }
-
-        .chat .chat-history .message:after {
-            bottom: 100%;
-            left: 7%;
-            border: solid transparent;
-            content: " ";
-            height: 0;
-            width: 0;
-            position: absolute;
-            pointer-events: none;
-            border-bottom-color: #fff;
-            border-width: 10px;
-            margin-left: -10px
-        }
-
-        .chat .chat-history .my-message {
-            background: #efefef
-        }
-
-        .chat .chat-history .my-message:after {
-            bottom: 100%;
-            left: 30px;
-            border: solid transparent;
-            content: " ";
-            height: 0;
-            width: 0;
-            position: absolute;
-            pointer-events: none;
-            border-bottom-color: #efefef;
-            border-width: 10px;
-            margin-left: -10px
-        }
-
-        .chat .chat-history .other-message {
-            background: #e8f1f3;
-            text-align: right
-        }
-
-        .chat .chat-history .other-message:after {
-            border-bottom-color: #e8f1f3;
-            left: 93%
-        }
-
-        .chat .chat-message {
-            padding: 20px
-        }
-
-        .online,
-        .offline,
-        .me {
-            margin-right: 2px;
-            font-size: 8px;
-            vertical-align: middle
-        }
-
-        .online {
-            color: #86c541
-        }
-
-        .offline {
-            color: #e47297
-        }
-
-        .me {
-            color: #1d8ecd
-        }
-
-        .float-right {
-            float: right
-        }
-
-        .clearfix:after {
-            visibility: hidden;
-            display: block;
-            font-size: 0;
-            content: " ";
-            clear: both;
-            height: 0
-        }
-
-        @media only screen and (max-width: 767px) {
-            .chat-app .people-list {
-                height: 465px;
-                width: 100%;
-                overflow-x: auto;
-                background: #fff;
-                left: -400px;
-                display: none
-            }
-            .chat-app .people-list.open {
-                left: 0
-            }
-            .chat-app .chat {
-                margin: 0
-            }
-            .chat-app .chat .chat-header {
-                border-radius: 0.55rem 0.55rem 0 0
-            }
-            .chat-app .chat-history {
-                height: 300px;
-                overflow-x: auto
-            }
-        }
-
-        @media only screen and (min-width: 768px) and (max-width: 992px) {
-            .chat-app .chat-list {
-                height: 650px;
-                overflow-x: auto
-            }
-            .chat-app .chat-history {
-                height: 600px;
-                overflow-x: auto
-            }
-        }
-
-        @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
-            .chat-app .chat-list {
-                height: 480px;
-                overflow-x: auto
-            }
-            .chat-app .chat-history {
-                height: calc(100vh - 350px);
-                overflow-x: auto
-            }
-        }
-    </style>
+    <meta name="description" content="Interest Chat Dashboard - Your chat conversations">
+    <title>Interest Chat - Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-    <h1>Welcome to My Web App</h1>
+<body class="dashboard-body">
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <h1>Welcome, <span class="welcome-text"><%= username %></span></h1>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2"></path>
+                    <path d="M12 20v2"></path>
+                    <path d="m4.93 4.93 1.41 1.41"></path>
+                    <path d="m17.66 17.66 1.41 1.41"></path>
+                    <path d="M2 12h2"></path>
+                    <path d="M20 12h2"></path>
+                    <path d="m6.34 17.66-1.41 1.41"></path>
+                    <path d="m19.07 4.93-1.41 1.41"></path>
+                </svg>
+            </button>
+        </header>
 
-    <!-- Login Form -->
-    <h2>Hello <%= JSON.stringify(username) %></h2>
-    <!--<%= data["refresh"] %><br />
-    <%= data["access"] %><br />-->
-   <!-- <h2>Submit Interest</h2>
-    <form action="/interests?token=<%= data['access'] %>" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="interest">Interest:</label>
-        <input type="text" id="interest" name="interest" required>
-        <button type="submit">Submit Interest</button>
-    </form>
--->
-    <div class="container">
-    <div class="row clearfix">
-        <div class="col-lg-12">
-            <div class="card chat-app">
-                <div id="plist" class="people-list">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-search"></i></span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Search...">
+        <!-- Chat App -->
+        <div class="chat-app">
+            <!-- People List -->
+            <aside class="people-list" id="peopleList">
+                <h3>Conversations</h3>
+                <input type="text" class="search-input" placeholder="Search contacts...">
+                <ul class="chat-list" id="chatList">
+                    <!-- Populated by JavaScript -->
+                </ul>
+            </aside>
+
+            <!-- Chat Panel -->
+            <main class="chat-panel">
+                <div class="chat-header">
+                    <img src="https://ui-avatars.com/api/?name=Chat&background=0ea5e9&color=fff" alt="Chat Avatar">
+                    <div class="chat-about">
+                        <h4>Select a conversation</h4>
+                        <small>Start chatting with your contacts</small>
                     </div>
-                    <ul class="list-unstyled chat-list mt-2 mb-0" id = "demo">
+                </div>
 
-                        <li class="clearfix">
-                            
+                <div class="chat-history">
+                    <ul id="messageList">
+                        <li>
+                            <div class="message-data">
+                                <span class="message-data-time">Welcome!</span>
+                            </div>
+                            <div class="message my-message">
+                                Select a contact from the left to start chatting.
+                            </div>
                         </li>
-                        
                     </ul>
                 </div>
-                <div class="chat">
-                    <div class="chat-header clearfix">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
-                                </a>
-                                <div class="chat-about">
-                                    <h6 class="m-b-0">Aiden Chavez</h6>
-                                    <small>Last seen: 2 hours ago</small>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 hidden-sm text-right">
-                                <a href="javascript:void(0);" class="btn btn-outline-secondary"><i class="fa fa-camera"></i></a>
-                                <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="fa fa-image"></i></a>
-                                <a href="javascript:void(0);" class="btn btn-outline-info"><i class="fa fa-cogs"></i></a>
-                                <a href="javascript:void(0);" class="btn btn-outline-warning"><i class="fa fa-question"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat-history">
-                        <ul class="m-b-0">
-                            <li class="clearfix">
-                                <div class="message-data text-right">
-                                    <span class="message-data-time">10:10 AM, Today</span>
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
-                                </div>
-                                <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
-                            </li>
-                            <li class="clearfix">
-                                <div class="message-data">
-                                    <span class="message-data-time">10:12 AM, Today</span>
-                                </div>
-                                <div class="message my-message">Are we meeting today?</div>                                    
-                            </li>                               
-                            <li class="clearfix">
-                                <div class="message-data">
-                                    <span class="message-data-time">10:15 AM, Today</span>
-                                </div>
-                                <div class="message my-message">Project has been already finished and I have results to show you.</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="chat-message clearfix">
-                        <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-send"></i></span>
-                            </div>
-                            <form action="/message?token=<%= data['access'] %>" method="POST">
-                                <input type="text" class="form-control" placeholder="Enter text here..."> 
-                            </form>                                   
-                        </div>
-                    </div>
+
+                <div class="chat-message">
+                    <form action="/message?token=<%= data['access'] %>" method="POST" id="messageForm">
+                        <input 
+                            type="text" 
+                            name="message" 
+                            placeholder="Type your message..." 
+                            autocomplete="off"
+                            required
+                        >
+                        <button type="submit">Send</button>
+                    </form>
                 </div>
-            </div>
+            </main>
         </div>
     </div>
-    </div>
 
-</body>
-</html>
-<script>
-    const xhttp = new XMLHttpRequest();
-    xhttp.onload = function() {
-        if (this.status >= 200 && this.status < 300) {
-            try {
-                // Parse the JSON response
-                const data = JSON.parse(this.responseText);
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
 
-                // Call a function to display the records
-                displayRecords(data);
-            } catch (e) {
-                console.error('Error parsing JSON:', e);
-                document.getElementById("demo").innerHTML = "Error parsing data.";
-            }
-        } else {
-            // Handle errors
-            console.error('Request failed with status:', this.status);
-            document.getElementById("demo").innerHTML = "Error fetching data.";
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark');
         }
-    };
 
-    // Handle request errors
-    xhttp.onerror = function() {
-        console.error('Request failed');
-        document.getElementById("demo").innerHTML = "Request failed.";
-    };
-
-    // Open and send the request
-    xhttp.open("POST", "/interests/received?token=<%= data['access'] %>", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send();
-
-    // Function to display records
-    function displayRecords(records) {
-        const demoElement = document.getElementById("demo");
-
-        // Clear any existing content
-        demoElement.innerHTML = '';
-
-        // Create a list to hold the records
-        const ul = document.createElement('ul');
-
-        // Iterate over the records and create list items
-        records.forEach(record => {
-            const li = document.createElement('li');
-            li.textContent = "User ID " + record.sender + " " +record.status; 
-            ul.appendChild(li);
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
         });
 
-        // Append the list to the demo element
-        demoElement.appendChild(ul);
-    }
-</script>
+        // Fetch contacts/interests
+        const fetchContacts = async () => {
+            try {
+                const response = await fetch('/interests/received?token=<%= data["access"] %>', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                });
+
+                if (response.ok) {
+                    const records = await response.json();
+                    displayContacts(records);
+                }
+            } catch (error) {
+                console.error('Error fetching contacts:', error);
+            }
+        };
+
+        // Display contacts in the sidebar
+        function displayContacts(records) {
+            const chatList = document.getElementById('chatList');
+            chatList.innerHTML = '';
+
+            if (records.length === 0) {
+                chatList.innerHTML = '<li style="padding: 1rem; color: var(--text-muted); text-align: center;">No contacts yet</li>';
+                return;
+            }
+
+            records.forEach(record => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <img src="https://ui-avatars.com/api/?name=User${record.sender}&background=0ea5e9&color=fff" alt="User">
+                    <div class="user-info">
+                        <div class="name">User ${record.sender}</div>
+                        <div class="status">${record.status}</div>
+                    </div>
+                `;
+                chatList.appendChild(li);
+            });
+        }
+
+        // Initialize
+        fetchContacts();
+    </script>
+</body>
+</html>
